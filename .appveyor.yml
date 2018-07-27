@@ -27,7 +27,8 @@ build_script:
   # - vcpkg install snappy:x64-windows-static-crt
   - copy c:\tools\vcpkg\installed\x86-windows-static-crt\bin\*.dll C:\projects\nimbus-deps\bin\x86\
   - copy c:\tools\vcpkg\installed\x64-windows-static-crt\bin\*.dll C:\projects\nimbus-deps\bin\x64\
-  # - 7z a -r C:\projects\nimbus-deps\dist\nimbus-deps.zip C:\projects\nimbus-deps\bin\*.* > nul
+  - 7z a -r C:\projects\nimbus-deps\dist\nimbus-deps.zip C:\projects\nimbus-deps\bin\*.* > nul
+  - appveyor PushArtifact C:\projects\nimbus-deps\dist\nimbus-deps.zip
 test: off
 deploy:
   release: nimbus-deps-v$(appveyor_build_version)
@@ -35,7 +36,6 @@ deploy:
   provider: GitHub
   auth_token:
     secure: Zu/JtLX4O5watrgvqG+Hw6mPSepU7mOGm7aOehTwBhwUdI/89Ma+imgYKM+qERXG
-  artifact: bin
   draft: false
   prerelease: false
   on:
