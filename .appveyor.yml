@@ -1,0 +1,41 @@
+version: '{build}'
+
+cache:
+- c:\tools\vcpkg\installed\ -> packages.txt
+
+# We always want 32 and 64-bit compilation
+matrix:
+  fast_finish: false     # set this flag to immediately finish build once one of the jobs fails.
+
+environment:
+  stoken:
+    secure: Zu/JtLX4O5watrgvqG+Hw6mPSepU7mOGm7aOehTwBhwUdI/89Ma+imgYKM+qERXG
+  
+install:
+  - setlocal EnableExtensions EnableDelayedExpansion
+  - copy %CD%\nimbus-deps\triplets\*.* C:\TOOLS\VCPKG\TRIPLETS\
+build_script:
+  - mkdir %CD%\bin
+  - mkdir %CD%\bin\x86
+  - mkdir %CD%\bin\x64
+  - vcpkg install zlib:x86-windows-static-crt
+  - vcpkg install zlip:x64-windows-static-crt
+  - vcpkg install lz4:x64-windows-static-crt
+  - vcpkg install lz4:x64-windows-static-crt
+  - vcpkg install snappy:x64-windows-static-crt
+  - vcpkg install snappy:x64-windows-static-crt
+  - copy c:\tools\vcpkg\installed\x86-windows-static-crt\bin\*.dll %CD%\bin\x86\
+  - copy c:\tools\vcpkg\installed\x64-windows-static-crt\bin\*.dll %CD%\bin\x64\
+  - 7z a nimbus-deps.zip %CD\bin\*.*
+deploy:
+  release: nimbus-deps-v$(appveyor_build_version)
+  description: 'Nimbus binary dependencies'
+  provider: GitHub
+  auth_token:
+    secure: Zu/JtLX4O5watrgvqG+Hw6mPSepU7mOGm7aOehTwBhwUdI/89Ma+imgYKM+qERXG
+  artifact: nimbus-deps.zip
+  draft: false
+  prerelease: false
+  on:
+    branch: master                 # release from master branch only
+    appveyor_repo_tag: true        # deploy on tag push only
