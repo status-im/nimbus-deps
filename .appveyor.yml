@@ -19,19 +19,19 @@ build_script:
   - mkdir C:\projects\nimbus-deps\bin\x86
   - mkdir C:\projects\nimbus-deps\bin\x64
   - mkdir C:\projects\nimbus-deps\dist
-  - vcpkg install zlib:x86-windows-static-crt
-  - vcpkg install zlib:x64-windows-static-crt
-  # - vcpkg install lz4:x86-windows-static-crt
-  # - vcpkg install lz4:x64-windows-static-crt
-  # - vcpkg install snappy:x86-windows-static-crt
-  # - vcpkg install snappy:x64-windows-static-crt
+  - vcpkg install snappy:x86-windows-static-crt
+  - vcpkg install snappy:x64-windows-static-crt
+  - vcpkg install rocksdb[lz4,zlib,snappy]:x86-windows-rocksdb
+  - vcpkg install rocksdb[lz4,zlib,snappy]:x64-windows-rocksdb
   - copy c:\tools\vcpkg\installed\x86-windows-static-crt\bin\*.dll C:\projects\nimbus-deps\bin\x86\
   - copy c:\tools\vcpkg\installed\x64-windows-static-crt\bin\*.dll C:\projects\nimbus-deps\bin\x64\
+  - copy c:\tools\vcpkg\installed\x86-windows-rocksdb\bin\rocksdb-shared.dll C:\projects\nimbus-deps\bin\x86\librocksdb.dll
+  - copy c:\tools\vcpkg\installed\x64-windows-rocksdb\bin\rocksdb-shared.dll C:\projects\nimbus-deps\bin\x64\librocksdb.dll
   - 7z a -r C:\projects\nimbus-deps\dist\nimbus-deps.zip C:\projects\nimbus-deps\bin\*.* > nul
   - appveyor PushArtifact C:\projects\nimbus-deps\dist\nimbus-deps.zip
 test: off
 deploy:
-  release: nimbus-deps-v$(appveyor_build_version)
+  release: nimbus-deps
   description: 'Nimbus binary dependencies'
   provider: GitHub
   auth_token:
