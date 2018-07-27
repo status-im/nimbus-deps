@@ -7,10 +7,6 @@ cache:
 matrix:
   fast_finish: false     # set this flag to immediately finish build once one of the jobs fails.
 
-environment:
-  stoken:
-    secure: Zu/JtLX4O5watrgvqG+Hw6mPSepU7mOGm7aOehTwBhwUdI/89Ma+imgYKM+qERXG
-
 install:
   - setlocal EnableExtensions EnableDelayedExpansion
   - copy c:\projects\nimbus-deps\triplets\*.* c:\tools\vcpkg\triplets\
