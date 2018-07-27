@@ -10,7 +10,7 @@ matrix:
 environment:
   stoken:
     secure: Zu/JtLX4O5watrgvqG+Hw6mPSepU7mOGm7aOehTwBhwUdI/89Ma+imgYKM+qERXG
-  
+
 install:
   - setlocal EnableExtensions EnableDelayedExpansion
   - copy c:\projects\nimbus-deps\triplets\*.* c:\tools\vcpkg\triplets\
@@ -26,7 +26,7 @@ build_script:
   # - vcpkg install snappy:x64-windows-static-crt
   - copy c:\tools\vcpkg\installed\x86-windows-static-crt\bin\*.dll C:\projects\nimbus-deps\bin\x86\
   - copy c:\tools\vcpkg\installed\x64-windows-static-crt\bin\*.dll C:\projects\nimbus-deps\bin\x64\
-  - 7z a -r nimbus-deps.zip C:\projects\nimbus-deps\bin\*.*
+  - 7z a -r nimbus-deps.zip C:\projects\nimbus-deps\bin\*.* > nul
 deploy:
   release: nimbus-deps-v$(appveyor_build_version)
   description: 'Nimbus binary dependencies'
@@ -37,5 +37,4 @@ deploy:
   draft: false
   prerelease: false
   on:
-    branch: master                 # release from master branch only
-    appveyor_repo_tag: true        # deploy on tag push only
+    appveyor_repo_tag: true
