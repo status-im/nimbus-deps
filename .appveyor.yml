@@ -19,7 +19,7 @@ build_script:
   - mkdir %CD%\bin\x86
   - mkdir %CD%\bin\x64
   - vcpkg install zlib:x86-windows-static-crt
-  - vcpkg install zlip:x64-windows-static-crt
+  - vcpkg install zlib:x64-windows-static-crt
   - vcpkg install lz4:x64-windows-static-crt
   - vcpkg install lz4:x64-windows-static-crt
   - vcpkg install snappy:x64-windows-static-crt
