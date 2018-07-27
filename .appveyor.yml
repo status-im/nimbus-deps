@@ -27,6 +27,7 @@ build_script:
   - copy c:\tools\vcpkg\installed\x86-windows-static-crt\bin\*.dll C:\projects\nimbus-deps\bin\x86\
   - copy c:\tools\vcpkg\installed\x64-windows-static-crt\bin\*.dll C:\projects\nimbus-deps\bin\x64\
   - 7z a -r nimbus-deps.zip C:\projects\nimbus-deps\bin\*.* > nul
+test: off
 deploy:
   release: nimbus-deps-v$(appveyor_build_version)
   description: 'Nimbus binary dependencies'
@@ -36,5 +37,6 @@ deploy:
   artifact: nimbus-deps.zip
   draft: false
   prerelease: false
-  on:
-    appveyor_repo_tag: true
+  tag: $(APPVEYOR_REPO_TAG_NAME)
+  # on:
+  #   appveyor_repo_tag: true
