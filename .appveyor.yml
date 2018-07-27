@@ -35,7 +35,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: Zu/JtLX4O5watrgvqG+Hw6mPSepU7mOGm7aOehTwBhwUdI/89Ma+imgYKM+qERXG
-  artifact: dist\nimbus-deps.zip
+  artifact: C:\projects\nimbus-deps\dist\nimbus-deps.zip
   draft: false
   prerelease: false
   on:
