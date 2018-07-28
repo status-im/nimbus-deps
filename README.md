@@ -6,7 +6,7 @@ To build `nimbus-deps` manually you need to have Microsoft Visual Studio 2017 in
 
 Please follow this steps to build Snappy and RocksDB DLLs.
 
-``` 
+```shell
 # Installing `vcpkg`.
 git clone https://github.com/Microsoft/vcpkg.git
 cd vcpkg
@@ -32,7 +32,7 @@ vcpkg install rocksdb[lz4,snappy,zlib]:x64-windows-rocksdb
 
 After successfull build you can find your dlls:
 
-```
+```shell
 # Snappy x86
 vcpkg\installed\x86-windows-static-crt\bin\snappy.dll
 # Snappy x64
