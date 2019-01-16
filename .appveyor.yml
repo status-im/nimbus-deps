@@ -23,6 +23,13 @@ build_script:
   - copy c:\tools\vcpkg\installed\x64-windows-static-crt\bin\*.dll C:\projects\nimbus-deps\bin\x64\
   - copy c:\tools\vcpkg\installed\x86-windows-rocksdb\bin\rocksdb-shared.dll C:\projects\nimbus-deps\bin\x86\librocksdb.dll
   - copy c:\tools\vcpkg\installed\x64-windows-rocksdb\bin\rocksdb-shared.dll C:\projects\nimbus-deps\bin\x64\librocksdb.dll
+  - cd c:\projects\nimbus-deps\lmdb
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
+  - cl.exe /DLMDBWINDOWSDLL_EXPORTS dllmain.c mdb-dll.c midl-dll.c advapi32.lib /link /DLL /OUT:lmdb32.dll
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+  - cl.exe /DLMDBWINDOWSDLL_EXPORTS dllmain.c mdb-dll.c midl-dll.c advapi32.lib /link /DLL /OUT:lmdb64.dll
+  - copy c:\projects\nimbus-deps\lmdb\lmdb32.dll c:\projects\nimbus-deps\bin\x86\lmdb.dll
+  - copy c:\projects\nimbus-deps\lmdb\lmdb64.dll c:\projects\nimbus-deps\bin\x64\lmdb.dll
   - 7z a -r C:\projects\nimbus-deps\dist\nimbus-deps.zip C:\projects\nimbus-deps\bin\*.* > nul
   - appveyor PushArtifact C:\projects\nimbus-deps\dist\nimbus-deps.zip
 test: off
