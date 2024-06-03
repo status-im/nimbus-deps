@@ -30,7 +30,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install DLL dependencies (Windows)
+      - name: Build RocksDB DLLs (Windows)
         if: >
           runner.os == 'Windows'
         run: |
@@ -39,11 +39,15 @@ jobs:
           mkdir bin/x86
           mkdir bin/x64
           mkdir dist
-          vcpkg install snappy:x86-windows-static
-          vcpkg install snappy:x64-windows-static
-          vcpkg install rocksdb[lz4,snappy,zlib]:x86-windows-static
-          vcpkg install rocksdb[lz4,snappy,zlib]:x64-windows-static
+          # vcpkg install rocksdb[lz4,zstd]:x86-windows-static
+          vcpkg install rocksdb[lz4,zstd]:x64-windows-static
+          # cp $VCPKG_INSTALLATION_ROOT/installed/x86-windows-static/bin/rocksdb-shared.dll $GITHUB_WORKSPACE/bin/x86/librocksdb.dll
+          cp $VCPKG_INSTALLATION_ROOT/installed/x64-windows-static/bin/rocksdb-shared.dll $GITHUB_WORKSPACE/bin/x64/librocksdb.dll
+          7z a -r $GITHUB_WORKSPACE/dist/nimbus-deps.zip $GITHUB_WORKSPACE/bin/*.*
 
-      - name: Run tests
-        run: |
-          echo "Done"
+      - name: Upload archive artefact
+        uses: actions/upload-artifact@v3
+        with:
+          name: nimbus-deps.zip
+          path: $GITHUB_WORKSPACE/dist/nimbus-deps.zip
+          retention-days: 2
