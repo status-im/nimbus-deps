@@ -18,6 +18,7 @@ jobs:
           - target:
               os: windows
             builder: windows-2019
+            shell: bash
 
     defaults:
       run:
