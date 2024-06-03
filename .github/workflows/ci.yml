@@ -18,7 +18,6 @@ jobs:
           - target:
               os: windows
             builder: windows-2019
-            shell: bash
 
     defaults:
       run:
@@ -34,13 +33,15 @@ jobs:
         if: >
           runner.os == 'Windows'
         run: |
-          echo $GITHUB_WORKSPACE
           cd $GITHUB_WORKSPACE
-          dir
           mkdir bin
           mkdir bin/x86
           mkdir bin/x64
           mkdir dist
+          vcpkg install snappy:x86-windows-static-crt --overlay-triplets=$GITHUB_WORKSPACE\triplets
+          vcpkg install snappy:x64-windows-static-crt --overlay-triplets=$GITHUB_WORKSPACE\triplets
+          vcpkg install rocksdb[lz4,snappy,zlib]:x86-windows-rocksdb --overlay-triplets=$GITHUB_WORKSPACE\triplets
+          vcpkg install rocksdb[lz4,snappy,zlib]:x64-windows-rocksdb --overlay-triplets=$GITHUB_WORKSPACE\triplets
 
       - name: Run tests
         run: |
