@@ -34,7 +34,8 @@ jobs:
         if: >
           runner.os == 'Windows'
         run: |
-          cd
+          echo $GITHUB_WORKSPACE
+          cd $GITHUB_WORKSPACE
           dir
           mkdir bin
           mkdir bin/x86
