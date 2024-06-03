@@ -39,10 +39,10 @@ jobs:
           mkdir bin/x86
           mkdir bin/x64
           mkdir dist
-          vcpkg install snappy:x86-windows-static-crt --overlay-triplets=$GITHUB_WORKSPACE\triplets
-          vcpkg install snappy:x64-windows-static-crt --overlay-triplets=$GITHUB_WORKSPACE\triplets
-          vcpkg install rocksdb[lz4,snappy,zlib]:x86-windows-rocksdb --overlay-triplets=$GITHUB_WORKSPACE\triplets
-          vcpkg install rocksdb[lz4,snappy,zlib]:x64-windows-rocksdb --overlay-triplets=$GITHUB_WORKSPACE\triplets
+          vcpkg install snappy:x86-windows-static
+          vcpkg install snappy:x64-windows-static
+          vcpkg install rocksdb[lz4,snappy,zlib]:x86-windows-static
+          vcpkg install rocksdb[lz4,snappy,zlib]:x64-windows-static
 
       - name: Run tests
         run: |
