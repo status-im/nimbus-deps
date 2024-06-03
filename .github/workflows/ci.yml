@@ -18,7 +18,7 @@ jobs:
           - target:
               os: windows
             builder: windows-2019
-            shell: msys2 {0}
+            shell: bash
 
     defaults:
       run:
@@ -29,23 +29,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          submodules: true
 
       - name: Install DLL dependencies (Windows)
         if: >
           runner.os == 'Windows'
         run: |
+          cd
+          dir
           mkdir bin
           mkdir bin/x86
           mkdir bin/x64
           mkdir dist
-
-          if [[ '${{ matrix.target.cpu }}' == 'amd64' ]]; then
-            ROCKSDBSUB=x64
-          else
-            ROCKSDBSUB=x86
-          fi
 
       - name: Run tests
         run: |
