@@ -1,6 +1,6 @@
 set(VCPKG_TARGET_ARCHITECTURE x64)
 
-if(${PORT} MATCHES "snappy|zlib|lz4")
+if(${PORT} MATCHES "snappy|zlib|lz4|zstd")
   set(VCPKG_CRT_LINKAGE static)
   set(VCPKG_LIBRARY_LINKAGE static)
 else()
