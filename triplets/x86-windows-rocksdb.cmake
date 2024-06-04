@@ -1,4 +1,5 @@
 set(VCPKG_TARGET_ARCHITECTURE x86)
+set(VCPKG_BUILD_TYPE release)
 
 if(${PORT} MATCHES "snappy|zlib|lz4|zstd")
   set(VCPKG_CRT_LINKAGE static)
