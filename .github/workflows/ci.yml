@@ -34,14 +34,15 @@ jobs:
         if: >
           runner.os == 'Windows'
         run: |
-          mkdir bin
-          mkdir bin/x86
-          mkdir bin/x64
           mkdir dist
-          vcpkg install rocksdb[lz4,zstd]:x86-windows-rocksdb --recurse --overlay-triplets="$GITHUB_WORKSPACE/triplets"
-          vcpkg install rocksdb[lz4,zstd]:x64-windows-rocksdb --recurse --overlay-triplets="$GITHUB_WORKSPACE/triplets"
-          cp $VCPKG_INSTALLATION_ROOT/installed/x86-windows-rocksdb/bin/rocksdb-shared.dll $GITHUB_WORKSPACE/bin/x86/librocksdb.dll
-          cp $VCPKG_INSTALLATION_ROOT/installed/x64-windows-rocksdb/bin/rocksdb-shared.dll $GITHUB_WORKSPACE/bin/x64/librocksdb.dll
+          mkdir dist/x86
+          mkdir dist/x64
+          # vcpkg install rocksdb[lz4,zstd]:x86-windows-rocksdb --recurse --overlay-triplets="$GITHUB_WORKSPACE/triplets"
+          # vcpkg install rocksdb[lz4,zstd]:x64-windows-rocksdb --recurse --overlay-triplets="$GITHUB_WORKSPACE/triplets"
+          # cp $VCPKG_INSTALLATION_ROOT/installed/x86-windows-rocksdb/bin/rocksdb-shared.dll $GITHUB_WORKSPACE/dist/x86/librocksdb.dll
+          # cp $VCPKG_INSTALLATION_ROOT/installed/x64-windows-rocksdb/bin/rocksdb-shared.dll $GITHUB_WORKSPACE/dist/x64/librocksdb.dll
+          touch dist/x86/librocksdb.dll
+          touch dist/x64/librocksdb.dll
 
       - name: Upload archive artefact
         uses: actions/upload-artifact@v4
