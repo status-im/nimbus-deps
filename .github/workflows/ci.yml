@@ -42,12 +42,11 @@ jobs:
           vcpkg install rocksdb[lz4,zstd]:x64-windows-rocksdb --recurse --overlay-triplets="$GITHUB_WORKSPACE/triplets"
           cp $VCPKG_INSTALLATION_ROOT/installed/x86-windows-rocksdb/bin/rocksdb-shared.dll $GITHUB_WORKSPACE/bin/x86/librocksdb.dll
           cp $VCPKG_INSTALLATION_ROOT/installed/x64-windows-rocksdb/bin/rocksdb-shared.dll $GITHUB_WORKSPACE/bin/x64/librocksdb.dll
-          7z a -r $GITHUB_WORKSPACE/dist/nimbus-deps.zip $GITHUB_WORKSPACE/bin/*.*
-          ls -la $GITHUB_WORKSPACE/dist/
 
       - name: Upload archive artefact
         uses: actions/upload-artifact@v4
         with:
           name: nimbus-deps.zip
-          path: ./dist/nimbus-deps.zip
+          path: ./dist/
           retention-days: 2
+          overwrite: true
