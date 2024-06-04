@@ -1,0 +1,51 @@
+name: CI
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - os: windows
+            cpu: amd64
+        include:
+          - target:
+              os: windows
+            builder: windows-2019
+            shell: bash
+
+    defaults:
+      run:
+        shell: ${{ matrix.shell }}
+
+    name: '${{ matrix.target.os }}-${{ matrix.target.cpu }} (Nim ${{ matrix.branch }})'
+    runs-on: ${{ matrix.builder }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build RocksDB DLLs (Windows)
+        if: >
+          runner.os == 'Windows'
+        run: |
+          mkdir dist
+          mkdir dist/x86
+          mkdir dist/x64
+          vcpkg install rocksdb[lz4,zstd]:x86-windows-rocksdb --recurse --overlay-triplets="$GITHUB_WORKSPACE/triplets"
+          vcpkg install rocksdb[lz4,zstd]:x64-windows-rocksdb --recurse --overlay-triplets="$GITHUB_WORKSPACE/triplets"
+          cp $VCPKG_INSTALLATION_ROOT/installed/x86-windows-rocksdb/bin/rocksdb-shared.dll $GITHUB_WORKSPACE/dist/x86/librocksdb.dll
+          cp $VCPKG_INSTALLATION_ROOT/installed/x64-windows-rocksdb/bin/rocksdb-shared.dll $GITHUB_WORKSPACE/dist/x64/librocksdb.dll
+
+      - name: Upload archive artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nimbus-deps
+          path: ./dist/
+          retention-days: 2
+          overwrite: true
