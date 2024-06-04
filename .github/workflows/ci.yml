@@ -49,5 +49,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: nimbus-deps.zip
-          path: $GITHUB_WORKSPACE/dist/nimbus-deps.zip
+          path: ./dist/nimbus-deps.zip
           retention-days: 2
